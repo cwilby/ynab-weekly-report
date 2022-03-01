@@ -11,7 +11,7 @@ dayjs.extend(isBetween);
 dayjs.extend(utc);
 
 const sum = (key) => (total, obj) => total + obj[key];
-const formatMoney = (cents) => '$' + (cents / 1000).toFixed(2);
+const formatMoney = (cents) => '$' + ((cents || 0) / 1000).toFixed(2);
 
 async function sendWeeklyReport() {
   try {
@@ -128,16 +128,16 @@ async function sendWeeklyReport() {
         mjml += `        <mj-table>`;
         mjml += `          <tr>`;
         mjml += `            <td style="text-align: center" width="33%">`;
-        mjml += `              <strong>Budgeted</strong><br />`;
+        mjml += `              <strong>This Month Budgeted</strong><br />`;
         mjml += `              <span>${formatMoney(budgeted)}</span>`;
         mjml += `            </td>`;
         mjml += `            <td style="text-align: center" width="33%">`;
-        mjml += `              <strong>Largest Purchase</strong><br />`;
-        mjml += `              <span>${formatMoney(largestPurchase.amount)} @ ${largestPurchase.payee_name}</span>`;
+        mjml += `              <strong>Largest Purchase This Month</strong><br />`;
+        mjml += `              <span>${largestPurchase ? `${formatMoney(largestPurchase?.amount)} @ ${largestPurchase.payee_name}` : 'Not Available'}</span>`;
         mjml += `            </td>`;
         mjml += `            <td style="text-align: center" width="33%">`;
-        mjml += `              <strong>Spent Most At</strong><br />`;
-        mjml += `              <span>${formatMoney(spentMostAt.total)} @ ${spentMostAt.payee_name}</span>`;
+        mjml += `              <strong>Spent Most At This Month</strong><br />`;
+        mjml += `              <span>${spentMostAt ? `${formatMoney(spentMostAt?.total)} @ ${spentMostAt.payee_name}` : 'Not Available'}</span>`;
         mjml += `            </td>`;
         mjml += `          </tr>`;
         mjml += `        </mj-table>`;
